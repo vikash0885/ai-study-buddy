@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Buddy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>StudyBuddy</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" data-tab="chat">
+                    <i class="fa-regular fa-message"></i>
+                    <span>Chat Context</span>
+                </li>
+                <li data-tab="flashcards">
+                    <i class="fa-regular fa-clone"></i>
+                    <span>Flashcards</span>
+                </li>
+                <li data-tab="quiz">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span>Quiz Mode</span>
+                </li>
+            </ul>
+
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="info">
+                    <span class="name">Student</span>
+                    <span class="status">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Chat View -->
+            <section id="chat-view" class="view active">
+                <div class="chat-header glass-panel">
+                    <div class="ai-status">
+                        <div class="status-dot"></div>
+                        <span>AI Assistant Ready</span>
+                    </div>
+                    <button class="icon-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Welcome Message -->
+                    <div class="message ai">
+                        <div class="message-content glass-panel">
+                            <p>Hello! I'm your AI Study Buddy. I can help you summarize notes, create flashcards, or quiz you on any topic. What are we studying today?</p>
+                        </div>
+                        <span class="timestamp">Just now</span>
+                    </div>
+                </div>
+
+                <div class="chat-input-area glass-panel">
+                    <button class="attach-btn"><i class="fa-solid fa-paperclip"></i></button>
+                    <input type="text" id="user-input" placeholder="Ask anything... (e.g. 'Explain Quantum Physics')">
+                    <button id="send-btn" class="send-btn primary-btn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Flashcards View -->
+            <section id="flashcards-view" class="view hidden">
+                <div class="flashcard-container">
+                    <div class="flashcard glass-panel" id="active-flashcard">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <span class="card-label">Question</span>
+                                <h3 id="card-question">What is the powerhouse of the cell?</h3>
+                                <p class="hint">Hint: It starts with M</p>
+                            </div>
+                            <div class="card-back">
+                                <span class="card-label">Answer</span>
+                                <h3 id="card-answer">Mitochondria</h3>
+                                <p class="explanation">Mitochondria generate most of the chemical energy needed to power the cell's biochemical reactions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard-controls">
+                        <button class="control-btn glass-panel" id="prev-card"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="control-btn glass-panel primary" id="flip-card">See Answer</button>
+                        <button class="control-btn glass-panel" id="next-card"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz View (Placeholder) -->
+            <section id="quiz-view" class="view hidden">
+                <div class="empty-state glass-panel">
+                    <i class="fa-solid fa-rocket"></i>
+                    <h2>Quiz Mode Coming Soon</h2>
+                    <p>We are fine-tuning the quiz generation engine.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
