@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Study Buddy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar Navigation -->
@@ -18,7 +22,7 @@
                 <i class="fa-solid fa-brain"></i>
                 <span>StudyBuddy</span>
             </div>
-            
+
             <ul class="nav-links">
                 <li class="active" data-tab="chat">
                     <i class="fa-regular fa-message"></i>
@@ -43,11 +47,15 @@
                     <span class="status">Online</span>
                 </div>
             </div>
+
+            <div class="app-credit">
+                Created by <a href="https://github.com/vikash0885" target="_blank">Vikash0885</a>
+            </div>
         </nav>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            
+
             <!-- Chat View -->
             <section id="chat-view" class="view active">
                 <div class="chat-header glass-panel">
@@ -62,7 +70,8 @@
                     <!-- Welcome Message -->
                     <div class="message ai">
                         <div class="message-content glass-panel">
-                            <p>Hello! I'm your AI Study Buddy. I can help you summarize notes, create flashcards, or quiz you on any topic. What are we studying today?</p>
+                            <p>Hello! I'm your AI Study Buddy. I can help you summarize notes, create flashcards, or
+                                quiz you on any topic. What are we studying today?</p>
                         </div>
                         <span class="timestamp">Just now</span>
                     </div>
@@ -90,15 +99,18 @@
                             <div class="card-back">
                                 <span class="card-label">Answer</span>
                                 <h3 id="card-answer">Mitochondria</h3>
-                                <p class="explanation">Mitochondria generate most of the chemical energy needed to power the cell's biochemical reactions.</p>
+                                <p class="explanation">Mitochondria generate most of the chemical energy needed to power
+                                    the cell's biochemical reactions.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="flashcard-controls">
-                        <button class="control-btn glass-panel" id="prev-card"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="control-btn glass-panel" id="prev-card"><i
+                                class="fa-solid fa-arrow-left"></i></button>
                         <button class="control-btn glass-panel primary" id="flip-card">See Answer</button>
-                        <button class="control-btn glass-panel" id="next-card"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="control-btn glass-panel" id="next-card"><i
+                                class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </section>
@@ -121,4 +133,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
