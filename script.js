@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
         flashcards: document.getElementById('flashcards-view'),
         quiz: document.getElementById('quiz-view')
     };
-    
+
     const navLinks = document.querySelectorAll('.nav-links li');
-    
+
     // Chat Elements
     const chatInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show target view
             const target = link.dataset.tab;
             const targetView = views[target];
-            
+
             targetView.classList.remove('hidden');
             // Small delay to allow display:block to apply before opacity transition
             setTimeout(() => targetView.classList.add('active'), 50);
-            
+
             state.currentView = target;
         });
     });
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', sender);
-        
+
         const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         messageDiv.innerHTML = `
@@ -79,29 +79,41 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <span class="timestamp">${timestamp}</span>
         `;
-        
+
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function generateAIResponse(userText) {
-        // Mock AI Logic - In a real app, this would call an API
-        const responses = [
-            "That's an interesting topic! Let's break it down.",
-            "I've added that to your flashcards for review.",
-            "Could you elaborate on that?",
-            "Here's a quick summary: " + userText.split(' ').slice(0, 5).join(' ') + "..."
-        ];
 
-        // Specific Keyword Triggers
-        if (userText.match(/hello|hi|hey/i)) return "Hello there! Ready to study?";
-        if (userText.match(/thank/i)) return "You're welcome! Keep up the good work.";
-        if (userText.match(/explain/i)) return "Sure, explaining concepts is my specialty. What specific part is confusing?";
+    // ---------------------------------------------------------
+    // API Configuration
+    // ---------------------------------------------------------
+    const API_KEY = "AIzaSyCOEf8wdIoas7ASW0vgX0r_Age9vAvAJes"; // ⚠️ Note: In a real production app, never expose keys in client-side code.
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-        return responses[Math.floor(Math.random() * responses.length)];
+    async function fetchGeminiResponse(prompt) {
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: prompt }]
+                    }]
+                })
+            });
+
+            if (!response.ok) throw new Error("API Connection Failed");
+
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            console.error(error);
+            return "Sorry, I'm having trouble connecting to the AI brain right now. Please check your internet connection.";
+        }
     }
 
-    function handleSend() {
+    async function handleSend() {
         const text = chatInput.value.trim();
         if (!text) return;
 
@@ -109,18 +121,33 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(text, 'user');
         chatInput.value = '';
 
-        // Simulate AI Delay
+        // Disable input while loading
+        chatInput.disabled = true;
+        sendBtn.disabled = true;
+
+        // Loading Indicator
         const typingIndicator = document.createElement('div');
         typingIndicator.className = 'message ai typing';
-        typingIndicator.innerHTML = '<div class="message-content glass-panel" style="padding:10px">Typing...</div>';
+        typingIndicator.innerHTML = '<div class="message-content glass-panel" style="padding:10px"><i class="fa-solid fa-circle-notch fa-spin"></i> Thinking...</div>';
         chatMessages.appendChild(typingIndicator);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        setTimeout(() => {
+        try {
+            // Fetch Real AI Response
+            const aiResponse = await fetchGeminiResponse(text);
+
+            // Remove loader and show response
             chatMessages.removeChild(typingIndicator);
-            const aiResponse = generateAIResponse(text);
             addMessage(aiResponse, 'ai');
-        }, 1500);
+        } catch (e) {
+            chatMessages.removeChild(typingIndicator);
+            addMessage("Error: Could not reach the AI.", 'ai');
+        } finally {
+            // Re-enable input
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
+        }
     }
 
     sendBtn.addEventListener('click', handleSend);
@@ -135,13 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = state.flashcards[index];
         // Reset flip state
         activeFlashcard.classList.remove('flipped');
-        
+
         // Wait for flip to reset before changing content (optional polish)
         setTimeout(() => {
             cardQuestion.innerText = card.question;
             const hintEl = activeFlashcard.querySelector('.hint');
             if (hintEl) hintEl.innerText = `Hint: ${card.hint}`;
-            
+
             cardAnswer.innerText = card.answer;
         }, 200);
     }
