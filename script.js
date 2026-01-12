@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // API Configuration
     // ---------------------------------------------------------
     const API_KEY = "AIzaSyCOEf8wdIoas7ASW0vgX0r_Age9vAvAJes"; // ⚠️ Note: In a real production app, never expose keys in client-side code.
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
 
     async function fetchGeminiResponse(prompt) {
         try {
